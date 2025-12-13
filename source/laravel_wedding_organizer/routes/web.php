@@ -1,17 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PengantinAuthController;
-use App\Http\Controllers\PaketController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route Login Pengantin
-Route::get('/login-pengantin', [PengantinAuthController::class, 'showLogin'])->name('login.pengantin.form');
-Route::post('/login-pengantin', [PengantinAuthController::class, 'login'])->name('login.pengantin');
-Route::get('/dashboard-pengantin', [PengantinAuthController::class, 'dashboard'])->middleware('auth');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Resource Paket
-Route::resource('paket', PaketController::class);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
