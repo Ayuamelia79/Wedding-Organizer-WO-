@@ -95,7 +95,7 @@ Pastikan sistem Anda sudah terinstall:
 ### 1. Clone the Repository
 
 ```bash
-git clone <https://github.com/Ayuamelia79/wedding-organizer.git>
+git clone https://github.com/Ayuamelia79/wedding-organizer.git
 cd laravel_wedding_organizer
 ```
 
