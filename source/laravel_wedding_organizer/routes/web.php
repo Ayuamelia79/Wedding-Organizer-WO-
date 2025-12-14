@@ -6,6 +6,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\PengantinAuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +34,10 @@ Route::get('/', function () {
     }
     return redirect()->route('admin.login');
 })->name('home');
+
+// Public Contact page
+Route::get('/hubungi-kami', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/hubungi-kami', [ContactController::class, 'store'])->name('contact.store');
 
 // ============================================================================
 // ADMIN ROUTES

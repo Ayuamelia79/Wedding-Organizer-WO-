@@ -119,7 +119,7 @@
                         </label>
                         <textarea name="lokasi_acara" id="lokasi_acara" rows="3" 
                                   required
-                                  placeholder="Contoh: Gedung Serbaguna, Jl. Merdeka No. 123, Jakarta Pusat"
+                                  placeholder="Contoh: kos aku"
                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition @error('lokasi_acara') border-red-500 @enderror">{{ old('lokasi_acara') }}</textarea>
                         @error('lokasi_acara')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

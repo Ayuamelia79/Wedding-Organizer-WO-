@@ -34,6 +34,18 @@
         </div>
         @endif
 
+        <!-- Status Filter -->
+        <div class="mb-6 bg-white rounded-xl shadow-lg p-4">
+            <div class="flex flex-wrap gap-2">
+                <a href="{{ route('admin.pemesanan.index') }}" class="px-4 py-2 rounded-lg text-sm font-medium transition {{ !request('status') ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">Semua ({{ $pemesanans->count() }})</a>
+                <a href="{{ route('admin.pemesanan.index', ['status' => 'pending']) }}" class="px-4 py-2 rounded-lg text-sm font-medium transition {{ request('status') === 'pending' ? 'bg-yellow-100 text-yellow-800 ring-2 ring-yellow-300' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">⏱ Menunggu ({{ $pemesanans->where('status', 'pending')->count() }})</a>
+                <a href="{{ route('admin.pemesanan.index', ['status' => 'confirmed']) }}" class="px-4 py-2 rounded-lg text-sm font-medium transition {{ request('status') === 'confirmed' ? 'bg-green-100 text-green-800 ring-2 ring-green-300' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">✓ Dikonfirmasi ({{ $pemesanans->where('status', 'confirmed')->count() }})</a>
+                <a href="{{ route('admin.pemesanan.index', ['status' => 'in_progress']) }}" class="px-4 py-2 rounded-lg text-sm font-medium transition {{ request('status') === 'in_progress' ? 'bg-blue-100 text-blue-800 ring-2 ring-blue-300' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">⚙ Dikerjakan ({{ $pemesanans->where('status', 'in_progress')->count() }})</a>
+                <a href="{{ route('admin.pemesanan.index', ['status' => 'completed']) }}" class="px-4 py-2 rounded-lg text-sm font-medium transition {{ request('status') === 'completed' ? 'bg-purple-100 text-purple-800 ring-2 ring-purple-300' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">★ Selesai ({{ $pemesanans->where('status', 'completed')->count() }})</a>
+                <a href="{{ route('admin.pemesanan.index', ['status' => 'cancelled']) }}" class="px-4 py-2 rounded-lg text-sm font-medium transition {{ request('status') === 'cancelled' ? 'bg-red-100 text-red-800 ring-2 ring-red-300' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">✕ Dibatalkan ({{ $pemesanans->where('status', 'cancelled')->count() }})</a>
+            </div>
+        </div>
+
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="bg-white rounded-xl shadow-lg p-6">
@@ -143,18 +155,13 @@
                                     $statusColors = [
                                         'pending' => 'bg-yellow-100 text-yellow-800',
                                         'confirmed' => 'bg-green-100 text-green-800',
+                                        'in_progress' => 'bg-blue-100 text-blue-800',
+                                        'completed' => 'bg-purple-100 text-purple-800',
                                         'cancelled' => 'bg-red-100 text-red-800',
-                                        'completed' => 'bg-blue-100 text-blue-800',
-                                    ];
-                                    $statusLabels = [
-                                        'pending' => 'Menunggu',
-                                        'confirmed' => 'Dikonfirmasi',
-                                        'cancelled' => 'Dibatalkan',
-                                        'completed' => 'Selesai',
                                     ];
                                 @endphp
                                 <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $statusColors[$pemesanan->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                    {{ $statusLabels[$pemesanan->status] ?? $pemesanan->status }}
+                                    {{ $pemesanan->getStatusLabel() }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

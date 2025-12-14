@@ -83,7 +83,20 @@ class Pemesanan extends Model
             'confirmed' => 'Dikonfirmasi',
             'cancelled' => 'Dibatalkan',
             'completed' => 'Selesai',
+            'in_progress' => 'Sedang Dikerjakan',
             default => 'Unknown'
         };
+    }
+
+    // Status options for forms
+    public static function statusOptions()
+    {
+        return [
+            'pending' => 'Menunggu Konfirmasi',
+            'confirmed' => 'Dikonfirmasi',
+            'in_progress' => 'Sedang Dikerjakan',
+            'completed' => 'Selesai',
+            'cancelled' => 'Dibatalkan',
+        ];
     }
 }

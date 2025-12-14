@@ -81,7 +81,7 @@ class DashboardController extends Controller
     public function reports()
     {
         $monthlyRevenue = Pemesanan::where('status', 'confirmed')
-            ->selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(*) as total_bookings')
+            ->selectRaw('MONTH(pemesanans.created_at) as month, YEAR(pemesanans.created_at) as year, COUNT(*) as total_bookings')
             ->join('pakets', 'pemesanans.paket_id', '=', 'pakets.id')
             ->selectRaw('SUM(pakets.harga) as revenue')
             ->groupBy('year', 'month')

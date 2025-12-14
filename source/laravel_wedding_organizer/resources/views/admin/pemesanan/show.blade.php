@@ -82,26 +82,66 @@
                         $badge = match($status) {
                             'pending' => 'bg-yellow-100 text-yellow-800',
                             'confirmed' => 'bg-green-100 text-green-800',
+                            'in_progress' => 'bg-blue-100 text-blue-800',
+                            'completed' => 'bg-purple-100 text-purple-800',
                             'cancelled' => 'bg-red-100 text-red-800',
-                            'completed' => 'bg-blue-100 text-blue-800',
                             default => 'bg-gray-100 text-gray-800'
                         };
                     @endphp
-                    <span class="px-3 py-1 text-xs font-semibold rounded-full {{ $badge }}">{{ strtoupper($status) }}</span>
+                    <span class="px-3 py-1.5 text-sm font-semibold rounded-full {{ $badge }}">{{ $pemesanan->getStatusLabel() }}</span>
                 </div>
-                @if(method_exists($pemesanan, 'statusOptions'))
+
+                <!-- Quick Status Actions -->
+                <div class="mb-4 space-y-2">
+                    <p class="text-sm font-medium text-gray-700 mb-2">Aksi Cepat:</p>
+                    @if($pemesanan->status === 'pending')
+                        <form method="POST" action="{{ route('admin.pemesanan.update', $pemesanan) }}" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="status" value="confirmed">
+                            <button type="submit" class="w-full px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700">✓ Konfirmasi</button>
+                        </form>
+                    @endif
+                    @if($pemesanan->status === 'confirmed')
+                        <form method="POST" action="{{ route('admin.pemesanan.update', $pemesanan) }}" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="status" value="in_progress">
+                            <button type="submit" class="w-full px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700">⚙ Mulai Kerjakan</button>
+                        </form>
+                    @endif
+                    @if($pemesanan->status === 'in_progress')
+                        <form method="POST" action="{{ route('admin.pemesanan.update', $pemesanan) }}" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="status" value="completed">
+                            <button type="submit" class="w-full px-3 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700">✓ Selesai</button>
+                        </form>
+                    @endif
+                    @if(in_array($pemesanan->status, ['pending', 'confirmed']))
+                        <form method="POST" action="{{ route('admin.pemesanan.update', $pemesanan) }}" class="inline" onsubmit="return confirm('Batalkan pemesanan ini?');">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="status" value="cancelled">
+                            <button type="submit" class="w-full px-3 py-2 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700">✕ Batalkan</button>
+                        </form>
+                    @endif
+                </div>
+
+                <hr class="my-4">
+
+                <!-- Manual Status Selection -->
                 <form method="POST" action="{{ route('admin.pemesanan.update', $pemesanan) }}" class="space-y-3">
                     @csrf
                     @method('PUT')
-                    <label class="block text-sm font-medium text-gray-700">Ubah Status</label>
+                    <label class="block text-sm font-medium text-gray-700">Atau Pilih Status Manual:</label>
                     <select name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500">
-                        @foreach($pemesanan->statusOptions() as $value => $label)
+                        @foreach(\App\Models\Pemesanan::statusOptions() as $value => $label)
                             <option value="{{ $value }}" @selected($pemesanan->status === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-pink-600 text-white rounded-lg text-sm font-semibold hover:bg-pink-700">Simpan</button>
+                    <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 bg-gray-700 text-white rounded-lg text-sm font-semibold hover:bg-gray-800">Update Status</button>
                 </form>
-                @endif
             </div>
 
             <div class="bg-white rounded-xl shadow p-6">

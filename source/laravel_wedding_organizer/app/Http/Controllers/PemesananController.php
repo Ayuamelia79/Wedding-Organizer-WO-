@@ -10,11 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Admin melihat semua pemesanan, Pengantin hanya melihat pemesanannya
         if (Auth::user()->role === 'admin') {
-            $pemesanans = Pemesanan::with(['paket', 'user'])->latest()->get();
+            $query = Pemesanan::with(['paket', 'user']);
+            
+            // Filter by status if provided
+            if ($request->has('status') && $request->status !== '') {
+                $query->where('status', $request->status);
+            }
+            
+            $pemesanans = $query->latest()->get();
             return view('admin.pemesanan.index', compact('pemesanans'));
         } else {
             $pemesanans = Pemesanan::with('paket')

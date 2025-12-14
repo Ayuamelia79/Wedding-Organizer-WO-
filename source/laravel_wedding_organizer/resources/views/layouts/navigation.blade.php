@@ -20,12 +20,32 @@
                     <x-nav-link :href="route($dashboardRoute)" :active="request()->routeIs($dashboardRoute)">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if(auth()->check() && auth()->user()->role === 'pengantin')
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('admin.paket.index')" :active="request()->routeIs('admin.paket.*')">
+                            {{ __('Paket') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.pemesanan.index')" :active="request()->routeIs('admin.pemesanan.*')">
+                            {{ __('Pemesanan') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.customers.index')" :active="request()->routeIs('admin.customers.*')">
+                            {{ __('Customers') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
+                            {{ __('Reports') }}
+                        </x-nav-link>
+                    @elseif(auth()->check() && auth()->user()->role === 'pengantin')
                         <x-nav-link :href="route('pengantin.paket.index')" :active="request()->routeIs('pengantin.paket.*')">
                             {{ __('Paket') }}
                         </x-nav-link>
                         <x-nav-link :href="route('pengantin.pemesanan.index')" :active="request()->routeIs('pengantin.pemesanan.*')">
                             {{ __('Pemesanan') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.*')">
+                            {{ __('Hubungi Kami') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.*')">
+                            {{ __('Hubungi Kami') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -89,6 +109,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('pengantin.pemesanan.index')" :active="request()->routeIs('pengantin.pemesanan.*')">
                     {{ __('Pemesanan') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.*')">
+                    {{ __('Hubungi Kami') }}
                 </x-responsive-nav-link>
             @endif
         </div>
