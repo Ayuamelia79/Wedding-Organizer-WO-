@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -21,7 +22,7 @@ class ContactController extends Controller
         ]);
 
         // Simple handling for now: log and flash. Could persist later.
-        \Log::info('Hubungi Kami', $data);
+        Log::info('Hubungi Kami', $data);
 
         return back()->with('status', 'Pesan berhasil dikirim. Kami akan menghubungi Anda.');
     }

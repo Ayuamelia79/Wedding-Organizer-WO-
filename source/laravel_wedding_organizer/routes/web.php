@@ -25,8 +25,8 @@ use Illuminate\Support\Facades\Auth;
 // ROOT & REDIRECTS
 // ============================================================================
 Route::get('/', function () {
-    if (auth()->check()) {
-        return match (auth()->user()->role) {
+    if (Auth::check()) {
+        return match (Auth::user()->role) {
             'admin' => redirect()->route('admin.dashboard'),
             'pengantin' => redirect()->route('pengantin.dashboard'),
             default => redirect()->route('admin.login'),
