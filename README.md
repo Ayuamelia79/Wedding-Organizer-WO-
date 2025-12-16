@@ -9,11 +9,15 @@
 
 - Mengatur paket wedding organizer
 
-- Mengelola daftar tamu
+- Mengatur Paket
 
 - Mengatur jadwal acara
 
 - Mencatat pembayaran
+
+- Mengelola daftar tamu
+
+- Mencatat pemesanan
 
 # Tujuan Wedding Organizer
 
@@ -21,7 +25,7 @@
 
 - Mengatur waktu, tempat, dan alur acara supaya berjalan lancar tanpa hambatan.
 
-- Mengkoordinasikan vendor seperti dekorasi, fotografi, catering, make up, dan lainnya.
+- Mengkoordinasikan vendor seperti dekorasi,  catering, make up, dan lainnya.
 
 - Mengurangi beban dan stres pasangan serta keluarga dalam persiapan acara.
 
@@ -41,7 +45,7 @@ Proses persiapan yang biasanya melelahkan menjadi lebih ringan dan terkontrol.
 Semua kegiatan disusun sesuai jadwal sehingga acara berjalan lancar.
 
 - Koordinasi Vendor Lebih Mudah
-WO membantu mengatur dekorasi, catering, make up, fotografer, dan vendor lainnya.
+WO membantu mengatur dekorasi, catering, make up dan vendor lainnya.
 
 - Tersedia Saran Profesional
 Berdasarkan pengalaman, WO dapat memberikan rekomendasi terbaik untuk kebutuhan acara.
